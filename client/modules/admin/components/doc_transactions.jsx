@@ -60,7 +60,7 @@ class DocTransactions extends React.Component {
     if (log.route) {
       return log.route;
     } else {
-      return <select class="form-control" id={`route-${log._id}`} name={`route-${log._id}`} ref={`route-${log._id}`} value={this.state[`route-${log._id}`]}>
+      return <select class="form-control" id={`route-${log._id}`} name={`route-${log._id}`} ref={`route-${log._id}`}>
         <option value="">N/A</option>
         <option value="admin">admin</option>
         <option value="sds">sds</option>
