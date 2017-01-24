@@ -138,9 +138,14 @@ class DocTransactions extends React.Component {
               <td>--</td>
               <td>--</td>
               <td>--</td>
-              <td><button class="btn btn-primary" onClick={this.handleAdd.bind(this)}>Add</button></td>
+              <td><button class="btn btn-success" onClick={this.handleAdd.bind(this)}>New</button></td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan="8"><a href="#" class="pull-right btn btn-warning">Export to Excel</a></td>
+            </tr>
+          </tfoot>
         </table>
       </div>
     );

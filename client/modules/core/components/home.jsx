@@ -22,7 +22,7 @@ class Home extends Component {
             <tbody>
               {this.props.docs.map((doc, i) => {
                 return (
-                  <tr>
+                  <tr key={i}>
                     <td>
                       <a href={`/admin/doc-edit/${doc._id}`}>{doc.trackingId}</a>
                     </td>
@@ -35,12 +35,7 @@ class Home extends Component {
         </div>
       );
     } else {
-      return <ul>
-        <li><strong>Username : Password</strong></li>
-        <li>admin : adminpassword</li>
-        <li>records : recordspassword</li>
-        <li>sds : sdspassword</li>
-      </ul>
+      return (<div>X Document Tracking System</div>);
     }
   }
 
