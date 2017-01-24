@@ -1,12 +1,13 @@
 import React from 'react';
 
 import AccountsUiWrapper from './accounts_ui_wrapper';
+import packageJson from '/package.json';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      version: 'v0.9.3'
+      version: packageJson.version
     };
   }
 

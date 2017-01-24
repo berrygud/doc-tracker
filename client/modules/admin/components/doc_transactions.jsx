@@ -3,6 +3,7 @@ import {Logs} from '/lib/collections';
 import moment from 'moment';
 
 import UsersDropdown from '../containers/users_dropdown';
+import ExcelExport from '../containers/excel_export';
 
 class DocTransactions extends React.Component {
   constructor(props) {
@@ -150,7 +151,9 @@ class DocTransactions extends React.Component {
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan="8"><a href="#" class="pull-right btn btn-warning">Export to Excel</a></td>
+              <td colSpan="8">
+                <ExcelExport {...this.props} />
+              </td>
             </tr>
           </tfoot>
         </table>

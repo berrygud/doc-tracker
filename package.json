@@ -1,13 +1,12 @@
 {
   "name": "doc-tracker",
-  "version": "0.1.0",
-  "description": "doc-tracker",
+  "version": "0.9.4",
+  "description": "Document Tracking System",
   "scripts": {
     "test": "mocha .scripts/mocha_boot.js client/**/tests/**/*.js --compilers js:babel-core/register",
     "storybook": "start-storybook -p 9001",
     "dev": "meteor --settings=settings.dev.json",
-    "stage": "meteor --settings=settings.stage.json",
-    "prod": "meteor --settings=settings.prod.json"
+    "stage": "meteor --settings=settings.stage.json"
   },
   "repository": {
     "type": "git",
@@ -17,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^0.8.7",
+    "excel-export": "^0.5.1",
     "mantra-core": "^1.2.0",
     "moment": "^2.17.1",
     "react": "^15.4.2",
