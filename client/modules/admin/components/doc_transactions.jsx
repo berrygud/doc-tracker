@@ -2,6 +2,8 @@ import React from 'react';
 import {Logs} from '/lib/collections';
 import moment from 'moment';
 
+import UsersDropdown from '../containers/users_dropdown';
+
 class DocTransactions extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,8 @@ class DocTransactions extends React.Component {
 
   handleOut(id) {
 
-    let route = this.refs['route-' + id].value;
+    // refs doesn't work on imported components, use jquery
+    let route = $('#route-' + id).val();
     let endStatus = this.refs['endStatus-' + id].value;
 
     if (!route || !endStatus) {
@@ -60,12 +63,7 @@ class DocTransactions extends React.Component {
     if (log.route) {
       return log.route;
     } else {
-      return <select class="form-control" id={`route-${log._id}`} name={`route-${log._id}`} ref={`route-${log._id}`}>
-        <option value="">N/A</option>
-        <option value="admin">admin</option>
-        <option value="sds">sds</option>
-        <option value="records">records</option>
-      </select>
+      return <UsersDropdown id={`route-${log._id}`} />
     }
   }
 
