@@ -21,10 +21,19 @@ class DocTransactions extends React.Component {
   }
 
   handleOut(id) {
+
+    let route = this.refs['route-' + id].value;
+    let endStatus = this.refs['endStatus-' + id].value;
+
+    if (!route || !endStatus) {
+      alert('Route and Status is required');
+      return false;
+    }
+
     let data = {
+      route,
+      endStatus,
       dateOut: new Date(),
-      route: this.refs['route-' + id].value,
-      endStatus: this.refs['endStatus-' + id].value,
       transactionNotes: this.refs['transactionNotes-' + id].value
     };
 
@@ -51,7 +60,7 @@ class DocTransactions extends React.Component {
     if (log.route) {
       return log.route;
     } else {
-      return <select class="form-control" name={`route-${log._id}`} ref={`route-${log._id}`}>
+      return <select class="form-control" id={`route-${log._id}`} name={`route-${log._id}`} ref={`route-${log._id}`} value={this.state[`route-${log._id}`]}>
         <option value="">N/A</option>
         <option value="admin">admin</option>
         <option value="sds">sds</option>
@@ -60,11 +69,11 @@ class DocTransactions extends React.Component {
     }
   }
 
-  getEndStatus(log) {
+  getStatus(log) {
     if (log.endStatus) {
       return log.endStatus;
     } else {
-      return <select class="form-control" name={`endStatus-${log._id}`} ref={`endStatus-${log._id}`}>
+      return <select class="form-control" id={`endStatus-${log._id}`} name={`endStatus-${log._id}`} ref={`endStatus-${log._id}`}>
         <option value="">N/A</option>
         <option value="endorsed">endorsed</option>
         <option value="signed">signed</option>
@@ -74,7 +83,7 @@ class DocTransactions extends React.Component {
   }
 
   getTransNotes(log) {
-    if (log.transactionNotes) {
+    if (log.dateOut) {
       return log.transactionNotes;
     } else {
       return <textarea class="form-control" name={`transactionNotes-${log._id}`} ref={`transactionNotes-${log._id}`} defaultValue="" />
@@ -85,7 +94,7 @@ class DocTransactions extends React.Component {
     if (log.dateOut) {
       return false;
     } else {
-      return <span><button class="btn btn-info" onClick={this.handleOut.bind(this, log._id)}>Out</button>&nbsp;</span>;
+      return <span><button class="btn btn-info" id={`outButton-${log._id}`} onClick={this.handleOut.bind(this, log._id)}>Out</button>&nbsp;</span>;
     }
   }
 
@@ -119,7 +128,7 @@ class DocTransactions extends React.Component {
                     {this.getRoute(log)}
                   </td>
                   <td>
-                    {this.getEndStatus(log)}
+                    {this.getStatus(log)}
                   </td>
                   <td>
                     {this.getTransNotes(log)}

@@ -34,6 +34,7 @@ class Header extends React.Component {
                 style={{marginTop: -7, marginLeft: 10}} type="text" class="form-control" name="search" ref="search" defaultValue="" placeholder="Search: Tracking ID" />
               </li>
               <li><button onClick={this.handleSearch.bind(this)} style={{margin: '-7px 0 0 15px'}} class="btn btn-primary">Search</button></li>
+              <li><span style={{marginLeft: 10, color: 'white'}}>v0.9.0</span></li>
             </ul>
           </div>
         </div>
