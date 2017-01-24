@@ -16,7 +16,11 @@ class Home extends Component {
     if (this.props.isLoggedIn) {
       return (
         <div>
-          <a href="/admin/doc-add">+ Create Document Transaction</a>
+
+          <a href="/admin/doc-add" class="btn btn-info">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
+            Create Document Tracker
+          </a>
           <hr />
           <h4>List Documents</h4>
           <table class="table table-condensed table-bordered table-striped table-hover">

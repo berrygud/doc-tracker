@@ -5,7 +5,8 @@ class ExcelExport extends React.Component {
     super(props);
   }
 
-  handleClick() {
+  handleClick(e) {
+    e.preventDefault();
     window.location.href = '/admin/excel/' + this.props.docId;
   }
 

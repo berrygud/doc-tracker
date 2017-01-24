@@ -32,7 +32,7 @@ class DocumentAdd extends React.Component {
   render() {
     return (
       <div class="col-sm-6">
-        <h4>Create New Document Tracker</h4>
+        <h4>Create Document Tracker</h4>
         <form method="post" class="form-horizontal">
           <div class="form-group">
             <label class="col-sm-3 control-label">Tracking Id</label>
