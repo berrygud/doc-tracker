@@ -52,7 +52,7 @@ class Header extends React.Component {
               />
               </li>
               <li><button onClick={this.handleSearch.bind(this)} style={{margin: '-7px 0 0 15px'}} class="btn btn-primary">Search</button></li>
-              <li><span style={{marginLeft: 10, color: 'white'}}>{this.state.version}</span></li>
+              <li><span style={{marginLeft: 10, color: 'white'}}>v{this.state.version}</span></li>
             </ul>
           </div>
         </div>
