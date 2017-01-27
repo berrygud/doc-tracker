@@ -6,6 +6,16 @@ import DocTransactions from './doc_transactions';
 class DocumentEdit extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      description: props.doc.description
+    }
+  }
+
+  handleDescChange() {
+    this.setState({
+      description: this.refs.description.value
+    })
   }
 
   handleSubmit(e) {
@@ -41,7 +51,7 @@ class DocumentEdit extends React.Component {
             <div class="form-group">
               <label class="col-sm-3 control-label">Description</label>
               <div class="col-sm-9">
-                <textarea class="form-control" name="description" ref="description" defaultValue={description} />
+                <textarea class="form-control" name="description" ref="description" onChange={this.handleDescChange.bind(this)} value={this.state.description} />
               </div>
             </div>
             <div class="form-group">
