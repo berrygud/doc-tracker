@@ -1,6 +1,6 @@
 {
   "name": "doc-tracker",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "Document Tracking System",
   "scripts": {
     "test": "mocha .scripts/mocha_boot.js client/**/tests/**/*.js --compilers js:babel-core/register",
@@ -17,7 +17,7 @@
   "dependencies": {
     "bcrypt": "^0.8.7",
     "excel-export": "^0.5.1",
-    "mantra-core": "^1.2.0",
+    "mantra-core": "^1.7.0",
     "moment": "^2.17.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
