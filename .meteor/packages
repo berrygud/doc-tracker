@@ -22,13 +22,13 @@ autopublish@1.0.7             # Publish all data to the clients (for prototyping
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 
 kadira:flow-router
-reactive-dict
+reactive-dict@1.1.8
 alanning:roles
 fourseven:scss
 
-accounts-ui
-accounts-password
-service-configuration
+accounts-ui@1.1.9
+accounts-password@1.3.3
+service-configuration@1.0.11
 
 chrismbeckett:toastr
 twbs:bootstrap
