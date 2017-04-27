@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+
+import packageJson from '/package.json';
 import {Documents} from '/lib/collections';
 
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      version: packageJson.version
+    };
   }
 
   handleDelete(id) {
@@ -39,7 +44,7 @@ class Home extends Component {
                       <a href={`/admin/doc-edit/${doc._id}`}>{doc.trackingId}</a>
                     </td>
                     <td>{doc.description}</td>
-                    <td><a class="btn btn-info" href={`/admin/doc-edit/${doc._id}`}>Edit</a>&nbsp;
+                    <td><a class="btn btn-info" href={`/admin/doc-edit/${doc._id}`}>Details</a>&nbsp;
                     <button class="btn btn-danger" onClick={this.handleDelete.bind(this, doc._id)}>Delete</button></td>
                   </tr>
                 );
@@ -49,7 +54,13 @@ class Home extends Component {
         </div>
       );
     } else {
-      return (<div>X Document Tracking System</div>);
+      return (
+        <div>
+          <h4>Welcome to DepEd Document Tracking System v{this.state.version}</h4>
+          <p>You need to be logged-in to use the system.</p>
+          <p><a href="/login">Click here to login</a></p>
+        </div>
+      )
     }
   }
 

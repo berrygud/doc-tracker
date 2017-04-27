@@ -15,6 +15,7 @@ class DocTransactions extends React.Component {
 
     Logs.insert({
       documentId: this.props.docId,
+      trackingId: this.props.trackingId,
       beginStatus: 'Accepted',
       office: Meteor.user().username,
       dateIn: new Date()
@@ -27,7 +28,9 @@ class DocTransactions extends React.Component {
 
     // refs doesn't work on imported components, use jquery
     let route = $('#route-' + id).val();
+    let routeUserId = $('#route-' + id + '-hidden').val();
     let endStatus = this.refs['endStatus-' + id].value;
+    let transactionNotes = this.refs['transactionNotes-' + id].value;
 
     if (!route || !endStatus) {
       alert('Route and Status is required');
@@ -36,9 +39,10 @@ class DocTransactions extends React.Component {
 
     let data = {
       route,
+      routeUserId,
       endStatus,
-      dateOut: new Date(),
-      transactionNotes: this.refs['transactionNotes-' + id].value
+      transactionNotes,
+      dateOut: new Date()
     };
 
     Logs.update(id, {$set: data});
@@ -74,9 +78,9 @@ class DocTransactions extends React.Component {
     } else {
       return <select class="form-control" id={`endStatus-${log._id}`} name={`endStatus-${log._id}`} ref={`endStatus-${log._id}`}>
         <option value="">N/A</option>
-        <option value="endorsed">endorsed</option>
-        <option value="signed">signed</option>
-        <option value="release">release</option>
+        <option value="Endorsed">Endorsed</option>
+        <option value="Signed">Signed</option>
+        <option value="Released">Released</option>
       </select>
     }
   }
@@ -93,8 +97,22 @@ class DocTransactions extends React.Component {
     if (log.dateOut) {
       return false;
     } else {
-      return <span><button class="btn btn-info" id={`outButton-${log._id}`} onClick={this.handleOut.bind(this, log._id)}>Out</button>&nbsp;</span>;
+      return <span><button class="btn btn-info" id={`outButton-${log._id}`} onClick={this.handleOut.bind(this, log._id)}>Check Out</button>&nbsp;</span>;
     }
+  }
+
+  isSuperAdmin() {
+    if (Roles.userIsInRole(Meteor.userId(), 'SuperAdmin')) {
+      return true;
+    }
+    return false;
+  }
+
+  hasEditPermission() {
+    if (this.isSuperAdmin() || this.props.doc.createdBy === Meteor.userId()) {
+      return true;
+    }
+    return false;
   }
 
   render() {
@@ -132,9 +150,10 @@ class DocTransactions extends React.Component {
                   <td>
                     {this.getTransNotes(log)}
                   </td>
-                  <td>
+                  <td align="center">
                     {this.getOutButton(log)}
-                    <button class="btn btn-danger" onClick={this.handleDelete.bind(this, log._id)}>Delete</button>
+                    {this.isSuperAdmin() ? <button class="btn btn-danger" onClick={this.handleDelete.bind(this, log._id)}>Delete</button> : ""}
+
                   </td>
                 </tr>
               );
@@ -146,7 +165,7 @@ class DocTransactions extends React.Component {
               <td>--</td>
               <td>--</td>
               <td>--</td>
-              <td><button class="btn btn-success" onClick={this.handleAdd.bind(this)}>New</button></td>
+              <td><button class="btn btn-success" onClick={this.handleAdd.bind(this)}>Check In</button></td>
             </tr>
           </tbody>
           <tfoot>

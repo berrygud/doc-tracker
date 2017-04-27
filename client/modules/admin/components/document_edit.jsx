@@ -33,7 +33,37 @@ class DocumentEdit extends React.Component {
     toastr.success('Document has been saved.');
   }
 
+  isSuperAdmin() {
+    if (Roles.userIsInRole(Meteor.userId(), 'SuperAdmin')) {
+      return true;
+    }
+    return false;
+  }
+
+  hasEditPermission() {
+    if (this.isSuperAdmin() || this.props.doc.createdBy === Meteor.userId()) {
+      return true;
+    }
+    return false;
+  }
+
   render() {
+
+    // console.log(this.hasEditPermission(), 'has edit');
+    // console.log(this.props, 'props');
+    // console.log(Meteor.userId(), 'userId');
+
+    let saveButton = ""
+    if (this.hasEditPermission()) {
+      saveButton = (
+        <div class="form-group">
+          <label class="col-sm-3 control-label">&nbsp;</label>
+          <div class="col-sm-9">
+            <button class="btn btn-primary" onClick={this.handleSubmit.bind(this)}>Save</button>
+          </div>
+        </div>
+      )
+    }
 
     let {trackingId, description, notes} = this.props.doc;
 
@@ -51,21 +81,19 @@ class DocumentEdit extends React.Component {
             <div class="form-group">
               <label class="col-sm-3 control-label">Description</label>
               <div class="col-sm-9">
-                <textarea class="form-control" name="description" ref="description" onChange={this.handleDescChange.bind(this)} value={this.state.description} />
+                <textarea class="form-control" name="description" ref="description" onChange={this.handleDescChange.bind(this)} value={this.state.description}
+                  disabled={this.hasEditPermission() ? false : true} />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-3 control-label">Notes</label>
               <div class="col-sm-9">
-                <textarea class="form-control" name="notes" ref="notes" defaultValue={notes} />
+                <textarea class="form-control" name="notes" ref="notes" defaultValue={notes}
+                  disabled={this.hasEditPermission() ? false : true} />
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label">&nbsp;</label>
-              <div class="col-sm-9">
-                <button class="btn btn-primary" onClick={this.handleSubmit.bind(this)}>Save</button>
-              </div>
-            </div>
+
+            {saveButton}
           </form>
         </div>
 
@@ -74,7 +102,7 @@ class DocumentEdit extends React.Component {
         <hr/>
 
         <div class="col-sm-12">
-          <DocTransactions data={this.props.docLogs} docId={this.props.id} />
+          <DocTransactions data={this.props.docLogs} docId={this.props.id} trackingId={trackingId} />
         </div>
 
       </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import AccountsUiWrapper from './accounts_ui_wrapper';
 import packageJson from '/package.json';
+import UserDropdownItems from './user_dropdown_items';
+import AdminDropdownItems from './admin_dropdown_items';
 
 class Header extends React.Component {
   constructor(props) {
@@ -30,16 +31,23 @@ class Header extends React.Component {
     }
   }
 
+  // { Roles.userIsInRole(Meteor.userId(), 'SuperAdmin') ? <AdminLeftNav /> : "" }
+
   render() {
+    let buttonStyle = {padding:0, marginLeft:10}
+    let role = (Meteor.user() && Meteor.user().roles) ? Meteor.user().roles[0] : ""
+    let username = (Meteor.user() ? `[ ${Meteor.user().username} : ${role} ]` : "")
+    let loginButton = (Meteor.userId() ? <a style={buttonStyle} href="/logout">Logout</a> : <a style={buttonStyle} href="/login">Login</a>)
+
     return(
       <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/">Doc Tracker</a>
+            <a class="navbar-brand" href="/">Dcman</a>
           </div>
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" style={{marginTop: 15}}>
-              <li class="active"><AccountsUiWrapper /></li>
+              <li><span style={{color: 'white'}}>v{this.state.version}</span></li>
               <li><input
                 style={{marginTop: -7, marginLeft: 10}}
                 type="text"
@@ -52,8 +60,23 @@ class Header extends React.Component {
               />
               </li>
               <li><button onClick={this.handleSearch.bind(this)} style={{margin: '-7px 0 0 15px'}} class="btn btn-primary">Search</button></li>
-              <li><span style={{marginLeft: 10, color: 'white'}}>v{this.state.version}</span></li>
+              <li>{loginButton}</li>
             </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">{username}</a></li>
+              <li class="dropdown">
+                <a href="#"
+                  class="dropdown-toggle"
+                  data-toggle="dropdown"
+                  role="button"
+                  aria-haspopup="true"
+                  aria-expanded="false">Menus <span class="caret"></span>
+                </a>
+                { Roles.userIsInRole(Meteor.userId(), 'SuperAdmin') ? <AdminDropdownItems /> : <UserDropdownItems /> }
+              </li>
+            </ul>
+
           </div>
         </div>
       </nav>
