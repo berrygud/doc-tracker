@@ -45,7 +45,7 @@ class SchoolDistrictAdd extends React.Component {
   render() {
     return (
       <div>
-        <h4>School Districts</h4>
+        <h4>Schools / Districts</h4>
         <div class="col-sm-4">
           <div class="form-group">
             <label for="sd_id">ID</label>

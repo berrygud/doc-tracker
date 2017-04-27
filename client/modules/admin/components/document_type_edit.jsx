@@ -47,26 +47,29 @@ class DocumentTypeEdit extends React.Component {
   render() {
     return (
       <div>
+        <h4>Document Types</h4>
         <div class="col-sm-3">
-          <label for="code">Code</label>&nbsp;
-            <input
-              type="text"
+          <div class="form-group">
+            <label for="code">Code</label>&nbsp;
+            <input type="text"
+              class="form-control"
               id="code"
               name="code"
               ref="code"
               value={this.state.code}
-              onChange={this.handleChangeCode.bind(this)}
-              /><br/>
+              onChange={this.handleChangeCode.bind(this)} />
+          </div>
+          <div class="form-group">
             <label for="name">Name</label>&nbsp;
-              <input
-                type="text"
-                id="name"
-                name="name"
-                ref="name"
-                value={this.state.name}
-                onChange={this.handleChangeName.bind(this)}
-                /><br/>
-              <button class="btn btn-primary" onClick={this.handleClick.bind(this)}>Update</button>
+            <input class="form-control"
+              type="text"
+              id="name"
+              name="name"
+              ref="name"
+              value={this.state.name}
+              onChange={this.handleChangeName.bind(this)} />
+          </div>
+          <button class="btn btn-primary" onClick={this.handleClick.bind(this)}>Update</button>
         </div>
       </div>
     );

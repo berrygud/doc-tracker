@@ -17,7 +17,7 @@ class RolesDropdown extends React.Component {
 
   render() {
     return (
-      <select id="role" name="role" ref="role" onChange={this.handleChangeRole.bind(this)}>
+      <select id="role" name="role" ref="role" onChange={this.handleChangeRole.bind(this)} class="form-control">
         <option value={this.state.role}>-- Select a role --</option>
         {this.props.data.map((role, i) => {
           return (

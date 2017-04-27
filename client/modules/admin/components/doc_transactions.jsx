@@ -150,7 +150,7 @@ class DocTransactions extends React.Component {
                   <td>
                     {this.getTransNotes(log)}
                   </td>
-                  <td align="center">
+                  <td style={{textAlign: 'center'}}>
                     {this.getOutButton(log)}
                     {this.isSuperAdmin() ? <button class="btn btn-danger" onClick={this.handleDelete.bind(this, log._id)}>Delete</button> : ""}
 

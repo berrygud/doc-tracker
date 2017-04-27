@@ -46,26 +46,32 @@ class SchoolDistrictEdit extends React.Component {
 
   render() {
     return (
-      <div>
-        <label for="sd_id">ID</label>&nbsp;
-        <input
-          type="text"
-          id="sd_id"
-          name="sd_id"
-          ref="sd_id"
-          value={this.state.sd_id}
-          onChange={this.handleChangeSdId.bind(this)}
-        /><br/>
-        <label for="name">School / District</label>&nbsp;
-        <input
-          type="text"
-          id="name"
-          name="name"
-          ref="name"
-          value={this.state.name}
-          onChange={this.handleChangeName.bind(this)}
-        /><br/>
-      <button class="btn btn-primary" onClick={this.handleClick.bind(this)}>Update</button>
+      <div class="col-sm-4">
+        <h4>Schools / Districts</h4>
+        <div class="form-group">
+          <label for="sd_id">ID</label>&nbsp;
+          <input class="form-control"
+            type="text"
+            id="sd_id"
+            name="sd_id"
+            ref="sd_id"
+            value={this.state.sd_id}
+            onChange={this.handleChangeSdId.bind(this)} />
+        </div>
+        <div class="form-group">
+          <label for="name">School / District</label>&nbsp;
+          <input class="form-control"
+            type="text"
+            id="name"
+            name="name"
+            ref="name"
+            value={this.state.name}
+            onChange={this.handleChangeName.bind(this)}
+          />
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" onClick={this.handleClick.bind(this)}>Update</button>
+        </div>
       </div>
     );
   }

@@ -35,9 +35,8 @@ class UserEdit extends React.Component {
     let password = this.refs.password.value;
     let password_repeat = this.refs.password_repeat.value;
 
-    console.log(password.length, 'plen');
     // passwords must be the same
-    // TODO: update to better length check 
+    // TODO: update to better length check
     if (password.length > 0 && password === password_repeat) {
       Meteor.call('users.setPasswordFromAdmin', userId, password);
     }
@@ -83,51 +82,62 @@ class UserEdit extends React.Component {
     return (
       <div>
         <div class="col-sm-4">
-          <label for="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            ref="username"
-            defaultValue={username}
-          /><br/>
-        <label for="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            ref="password"
-            defaultValue=""
-          /><br/>
-          <label for="password_repeat">Repeat Password</label>
-            <input
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control"
+              type="text"
+              id="username"
+              name="username"
+              ref="username"
+              defaultValue={username}
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control"
+              type="password"
+              id="password"
+              name="password"
+              ref="password"
+              defaultValue="" />
+          </div>
+          <div class="form-group">
+            <label for="password_repeat">Repeat Password</label>
+            <input class="form-control"
               type="password"
               id="password_repeat"
               name="password_repeat"
               ref="password_repeat"
               defaultValue=""
-          /><br/>
-          <label for="email">Email</label>
-            <input
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control"
               type="email"
               id="email"
               name="email"
               ref="email"
-              defaultValue={email}
-          /><br/>
-          <label for="full_name">Full Name</label>
-            <input
+              defaultValue={email} />
+          </div>
+          <div class="form-group">
+            <label for="full_name">Full Name</label>
+            <input class="form-control"
               type="full_name"
               id="full_name"
               name="full_name"
               ref="full_name"
-              defaultValue={full_name}
-          /><br/>
-          <RolesDropdown />
-          <br/>
-          <button class="btn btn-primary" onClick={this.handleClick.bind(this)}>
-            Update
-          </button>
+              defaultValue={full_name} />
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <RolesDropdown />
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" onClick={this.handleClick.bind(this)}>
+              Update
+            </button>
+          </div>
         </div>
       </div>
     );

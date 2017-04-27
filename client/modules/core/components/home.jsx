@@ -44,7 +44,7 @@ class Home extends Component {
                       <a href={`/admin/doc-edit/${doc._id}`}>{doc.trackingId}</a>
                     </td>
                     <td>{doc.description}</td>
-                    <td><a class="btn btn-info" href={`/admin/doc-edit/${doc._id}`}>Details</a>&nbsp;
+                    <td style={{textAlign: 'center'}}><a class="btn btn-info" href={`/admin/doc-edit/${doc._id}`}>Details</a>&nbsp;
                     <button class="btn btn-danger" onClick={this.handleDelete.bind(this, doc._id)}>Delete</button></td>
                   </tr>
                 );

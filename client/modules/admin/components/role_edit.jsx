@@ -28,23 +28,28 @@ class RoleEdit extends React.Component {
     return (
       <div>
         <div class="col-sm-4">
-          <label for="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            ref="name"
-            defaultValue={name}
-          /><br/>
-          <input
-            type="hidden"
-            name="origName"
-            id="origName"
-            ref="origName"
-            value={origName} />
-          <button class="btn btn-primary" onClick={this.handleClick.bind(this)}>
-            Update
-          </button>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control"
+              type="text"
+              id="name"
+              name="name"
+              ref="name"
+              defaultValue={name} />
+          </div>
+          <div class="form-group">
+            <input class="form-group"
+              type="hidden"
+              name="origName"
+              id="origName"
+              ref="origName"
+              value={origName} />
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary" onClick={this.handleClick.bind(this)}>
+              Update
+            </button>
+          </div>
         </div>
       </div>
     );
