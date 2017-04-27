@@ -53,4 +53,15 @@ export default function (injectDeps, {FlowRouter}) {
       });
     }
   });
+
+  // TODO: remove this, can't automate this on heroku yet...
+  FlowRouter.route('/superadmin', {
+    action() {
+      let adminUser = Meteor.users.findOne({username: 'admin'});
+      if (adminUser) {
+        Roles.addUsersToRoles(adminUser._id, ['SuperAdmin']);
+        console.log(adminUser._id + " admin made SuperAdmin");
+      }
+    }
+  });
 }
