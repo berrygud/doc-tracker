@@ -7,6 +7,8 @@ import MainLayout from './components/main_layout.jsx';
 import Home from './containers/home.js';
 import Dashboard from './containers/dashboard.js';
 import NotAllowed from './components/not_allowed.jsx';
+import Search from './containers/search.js';
+import SearchResult from './containers/search_result.js';
 
 export default function (injectDeps, {FlowRouter}) {
   const MainLayoutCtx = injectDeps(MainLayout);
@@ -45,6 +47,24 @@ export default function (injectDeps, {FlowRouter}) {
       });
     }
   });
+
+  FlowRouter.route('/search', {
+    name: 'search',
+    action() {
+      mount(MainLayoutCtx, {
+        content: () => (<Search />)
+      });
+    }
+  });  
+
+  FlowRouter.route('/search-result/:id', {
+    name: 'search-result',
+    action(params) {
+      mount(MainLayoutCtx, {
+        content: () => (<SearchResult id={params.id} />)
+      });
+    }
+  });    
 
   FlowRouter.route('/not-allowed', {
     action() {
