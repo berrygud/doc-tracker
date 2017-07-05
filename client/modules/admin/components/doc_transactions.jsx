@@ -128,7 +128,7 @@ class DocTransactions extends React.Component {
               <td><strong>Date Out</strong></td>
               <td><strong>Route</strong></td>
               <td><strong>Status</strong></td>
-              <td><strong>Notes</strong></td>
+              <td><strong>Remarks</strong></td>
               <td><strong>Actions</strong></td>
             </tr>
           </thead>

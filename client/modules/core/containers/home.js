@@ -16,12 +16,12 @@ export const composer = ({context}, onData) => {
 
     let docsTrackingIds = docs.map((doc) => {
       return doc.trackingId;
-    });
+    });    
 
     let trackingIds = _.union(docsTrackingIds, logsTrackingIds);
 
     const options = {
-      sort: {_id: -1}
+      sort: {createdDate: -1}
     };
     let docsUnion = Collections.Documents.find({ trackingId: {
       $in: trackingIds

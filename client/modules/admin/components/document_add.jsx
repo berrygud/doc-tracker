@@ -38,7 +38,7 @@ class DocumentAdd extends React.Component {
     });
 
     FlowRouter.redirect('/admin/doc-edit/' + documentId);
-    toastr.success('Document has been saved.');
+    toastr.success(`Document has been saved with TrackingID: ${trackingId.value}`);
   }
 
   render() {
@@ -47,7 +47,7 @@ class DocumentAdd extends React.Component {
         <h4>Create Document Tracker</h4>
         <form method="post" class="form-horizontal">
           <div class="form-group">
-            <label class="col-sm-3 control-label">Tracking Id</label>
+            <label class="col-sm-3 control-label">Tracking ID</label>
             <div class="col-sm-9">
               <input class="form-control" type="text" name="trackingId" ref="trackingId" defaultValue="" />
             </div>

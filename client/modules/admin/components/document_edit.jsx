@@ -58,8 +58,14 @@ class DocumentEdit extends React.Component {
       saveButton = (
         <div class="form-group">
           <label class="col-sm-3 control-label">&nbsp;</label>
-          <div class="col-sm-9">
+          <div class="col-sm-6">
             <button class="btn btn-primary" onClick={this.handleSubmit.bind(this)}>Save</button>
+          </div>
+          <div class="col-sm-3">
+            <a href="/admin/doc-add" class="btn btn-info">
+              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
+              Create Document Tracker
+            </a>
           </div>
         </div>
       )
@@ -73,7 +79,7 @@ class DocumentEdit extends React.Component {
           <h4>Edit Document Tracker</h4>
           <form method="post" class="form-horizontal">
             <div class="form-group">
-              <label class="col-sm-3 control-label">Tracking Id</label>
+              <label class="col-sm-3 control-label">Tracking ID</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" name="trackingId" ref="trackingId" defaultValue={trackingId} disabled="true" />
               </div>
@@ -86,7 +92,7 @@ class DocumentEdit extends React.Component {
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label">Notes</label>
+              <label class="col-sm-3 control-label">Remarks</label>
               <div class="col-sm-9">
                 <textarea class="form-control" name="notes" ref="notes" defaultValue={notes}
                   disabled={this.hasEditPermission() ? false : true} />
