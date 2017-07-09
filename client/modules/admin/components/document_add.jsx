@@ -17,7 +17,7 @@ class DocumentAdd extends React.Component {
     let documentId = Meteor.uuid();
 
     let docTypeId = $('#documentType').val();
-    let dateId = moment().format('MMDDYYHHmmss');
+    let dateId = moment().format('YYYYMMDDHHmmss');
     let trackingId = `${docTypeId}-${dateId}`;
 
     Documents.insert({

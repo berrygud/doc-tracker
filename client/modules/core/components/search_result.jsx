@@ -5,8 +5,8 @@ class SearchResult extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(this.props.docLogs)
-    console.log(this.props.doc)
+    // console.log(this.props.docLogs, 'doclogs')
+    // console.log(this.props.doc)
   }
 
   getDateOut(log) {
@@ -19,7 +19,7 @@ class SearchResult extends React.Component {
 
   render() {
     let { doc, docLogs } = this.props;
-    
+
     let createdDate = moment(doc.createdDate).format('llll');
 
     return (
@@ -36,6 +36,7 @@ class SearchResult extends React.Component {
               <td><strong>Date In</strong></td>
               <td><strong>Date Out</strong></td>
               <td><strong>Route</strong></td>
+              <td><strong>Remarks</strong></td>
               <td><strong>Status</strong></td>
             </tr>
           </thead>
@@ -47,6 +48,7 @@ class SearchResult extends React.Component {
                   <td>{moment(d.dateIn).format('llll')}</td>
                   <td>{this.getDateOut(d)}</td>
                   <td>{d.route}</td>
+                  <td>{d.transactionNotes}</td>
                   <td>{d.endStatus}</td>
                 </tr>
               );

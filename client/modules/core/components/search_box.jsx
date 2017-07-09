@@ -49,7 +49,7 @@ class SearchBox extends Component {
           ref="search"
           defaultValue=""
           onKeyPress={this.handleKeyPress.bind(this)}
-          placeholder="Search: Tracking ID" />        
+          placeholder="TRACK MY DOCUMENT" />        
       </div>
     )
   }
