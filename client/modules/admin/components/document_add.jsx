@@ -50,13 +50,15 @@ class DocumentAdd extends React.Component {
           <div class="form-group">
             <label class="col-sm-3 control-label">Description</label>
             <div class="col-sm-9">
-              <textarea class="form-control" name="description" ref="description" defaultValue="" />
+              <textarea class="form-control" name="description" 
+                ref="description" defaultValue="" />
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Remarks</label>
             <div class="col-sm-9">
-              <textarea class="form-control" name="notes" ref="notes" defaultValue="" />
+              <textarea class="form-control" name="notes" ref="notes" 
+                defaultValue="" />
             </div>
           </div>
 
@@ -73,7 +75,8 @@ class DocumentAdd extends React.Component {
           <div class="form-group">
             <label class="col-sm-3 control-label">&nbsp;</label>
             <div class="col-sm-9">
-              <button class="btn btn-primary" onClick={this.handleCreate.bind(this)}>Create</button>
+              <button onClick={this.handleCreate.bind(this)} 
+                class="btn btn-primary">Create</button>
             </div>
           </div>
         </form>

@@ -61,8 +61,6 @@ class Home extends Component {
           <h4>Welcome to DepEd Document Tracking System v{this.state.version}</h4>
           <p>You need to be logged-in to use the system.</p>
           <p><a href="/login">Click here to login</a></p>
-          <br/>
-          <p><a href="/search">Search feature for Public</a></p>
         </div>
       )
     }

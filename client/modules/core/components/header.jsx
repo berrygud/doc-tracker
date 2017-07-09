@@ -3,6 +3,7 @@ import React from 'react';
 import packageJson from '/package.json';
 import UserDropdownItems from './user_dropdown_items';
 import AdminDropdownItems from './admin_dropdown_items';
+import SearchBox from '../containers/search_box';
 
 class Header extends React.Component {
   constructor(props) {
@@ -14,23 +15,33 @@ class Header extends React.Component {
 
   handleSearch(e) {
     e.preventDefault();
-    let keyword = this.refs.search.value;
-    this.refs.search.value = "";
-    this.props.search(keyword, (err, res) => {
-      if (res.length) {
-        FlowRouter.go('/admin/doc-edit/' + res[0]._id);
-      } else {
-        toastr.warning("Search didn't find a match");
-      }
-    });
-  }
+    // let keyword = this.refs.search.value;
+    let keyword = $('#search').val();
+    // this.refs.search.value = "";
+    $('#search').val('');
 
-  handleKeyPress(e) {
-    if (e.key === 'Enter') {
-      this.handleSearch(e);
+    // search for logged-in users
+    if (Meteor.userId()) {
+      this.props.search(keyword, (err, res) => {
+        if (res.length) {
+          FlowRouter.go('/admin/doc-edit/' + res[0]._id);
+        } else {
+          toastr.warning("Search didn't find a match");
+        }
+      });
+    } else {
+      // search for public users
+      this.props.search(keyword, (err, res) => {
+        if (res.length) {
+          FlowRouter.go('/search-result/' + res[0]._id);
+        } else {
+          toastr.warning("Search didn't find a match");
+        }
+      });      
     }
+    
   }
-
+  
   // { Roles.userIsInRole(Meteor.userId(), 'SuperAdmin') ? <AdminLeftNav /> : "" }
 
   render() {
@@ -48,16 +59,8 @@ class Header extends React.Component {
           <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav" style={{marginTop: 15}}>
               <li><span style={{color: 'white'}}>v{this.state.version}</span></li>
-              <li><input
-                style={{marginTop: -7, marginLeft: 10}}
-                type="text"
-                class="form-control"
-                name="search"
-                ref="search"
-                defaultValue=""
-                onKeyPress={this.handleKeyPress.bind(this)}
-                placeholder="Search: Tracking ID"
-              />
+              <li>
+                <SearchBox />
               </li>
               <li><button onClick={this.handleSearch.bind(this)} style={{margin: '-7px 0 0 15px'}} class="btn btn-primary">Search</button></li>
               <li>{loginButton}</li>
