@@ -68,7 +68,7 @@ class DocTransactions extends React.Component {
     if (log.route) {
       return log.route;
     } else {
-      return <UsersDropdown id={`route-${log._id}`} />
+      return <UsersDropdown id={`route-${log._id}`} excludeUid={Meteor.userId()} />
     }
   }
 
@@ -115,6 +115,30 @@ class DocTransactions extends React.Component {
     return false;
   }
 
+  getCheckInRow() {
+    let latestTransaction = this.props.data[this.props.data.length - 1];
+
+    // hide the check-in button if
+    // the you are the last transaction user
+    // and date-in is not empty
+    if (latestTransaction.office === Meteor.user().username &&
+      typeof latestTransaction.dateIn !== 'undefined' ) {
+        return false;
+    } else {
+      return (
+        <tr>
+          <td>{Meteor.user().username}</td>
+          <td>(auto)</td>
+          <td>--</td>
+          <td>--</td>
+          <td>--</td>
+          <td>--</td>
+          <td><button class="btn btn-success" onClick={this.handleAdd.bind(this)}>Check In</button></td>
+        </tr>
+      )
+    }
+  }
+
   render() {
     let logs = this.props.data;
     return (
@@ -158,15 +182,7 @@ class DocTransactions extends React.Component {
                 </tr>
               );
             })}
-            <tr>
-              <td>{Meteor.user().username}</td>
-              <td>(auto)</td>
-              <td>--</td>
-              <td>--</td>
-              <td>--</td>
-              <td>--</td>
-              <td><button class="btn btn-success" onClick={this.handleAdd.bind(this)}>Check In</button></td>
-            </tr>
+            {this.getCheckInRow()}
           </tbody>
           <tfoot>
             <tr>

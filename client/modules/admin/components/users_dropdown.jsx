@@ -24,11 +24,13 @@ class UsersDropdown extends React.Component {
         <select class="form-control" id={id} name={id} ref="userRoleName" onChange={this.handleChange.bind(this)}>
           <option>--Select--</option>
           {this.props.users.map((user, i) => {
-            return (
-              <option data-userid={user._id} value={`[${user.roles[0]}] ${user.profile.name}`} key={i}>
-                [{user.roles[0]}] {user.profile.name}
-              </option>
-            );
+            if (user._id !== this.props.excludeUid) {
+              return (
+                <option data-userid={user._id} value={`[${user.roles[0]}] ${user.profile.name}`} key={i}>
+                  [{user.roles[0]}] {user.profile.name}
+                </option>
+              );
+            }
           })}
         </select>
         <input type="hidden" ref="userId" id={hiddenId} name={hiddenId} defaultValue="" />

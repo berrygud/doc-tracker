@@ -26,7 +26,13 @@ export default function (injectDeps, {FlowRouter}) {
     name: 'home',
     action() {
       mount(MainLayoutCtx, {
-        content: () => (<Home />)
+        content: () => {
+          if (Meteor.user()) {
+            return (<Home />)
+          } else {
+            FlowRouter.redirect('/login');
+          }
+        }
       });
     }
   });
@@ -55,7 +61,7 @@ export default function (injectDeps, {FlowRouter}) {
         content: () => (<Search />)
       });
     }
-  });  
+  });
 
   FlowRouter.route('/search-result/:id', {
     name: 'search-result',
@@ -64,7 +70,7 @@ export default function (injectDeps, {FlowRouter}) {
         content: () => (<SearchResult id={params.id} />)
       });
     }
-  });    
+  });
 
   FlowRouter.route('/not-allowed', {
     action() {
