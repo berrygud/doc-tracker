@@ -15,4 +15,8 @@ Meteor.startup(function () {
       return true;
     }
   });
-})
+
+  process.env.MAIL_URL = 'smtp://dcmancapiz@gmail.com:dcmanpassword@smtp.gmail.com:587';
+});
+
+

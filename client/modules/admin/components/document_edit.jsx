@@ -71,12 +71,13 @@ class DocumentEdit extends React.Component {
       )
     }
 
-    let {trackingId, description, notes} = this.props.doc;
+    let {trackingId, description, notes, email} = this.props.doc;
+    let emailAddress = (email) ? `(${email})` : '';
 
     return (
       <div>
         <div class="col-sm-6">
-          <h4>Edit Document Tracker</h4>
+          <h4>Edit Document Tracker {emailAddress}</h4>
           <form method="post" class="form-horizontal">
             <div class="form-group">
               <label class="col-sm-3 control-label">Tracking ID</label>
@@ -103,7 +104,9 @@ class DocumentEdit extends React.Component {
           </form>
         </div>
 
-        <div class="col-sm-6">&nbsp;</div>
+        <div class="col-sm-6">
+          &nbsp;
+        </div>
 
         <hr/>
 

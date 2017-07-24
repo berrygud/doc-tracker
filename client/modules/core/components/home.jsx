@@ -30,9 +30,9 @@ class Home extends Component {
           <thead>
             <tr>
               <td class="col-sm-2">Tracking ID</td>
-              <td class="col-sm-4">Description</td>
+              <td class="col-sm-3">Description</td>
               <td class="col-sm-4">Remarks</td>
-              <td class="col-sm-2"><a href="/superadmin" style={{textDecoration: 'none', color: '#333'}}>Actions</a></td>
+              <td class="col-sm-3"><a href="/superadmin" style={{textDecoration: 'none', color: '#333'}}>Actions</a></td>
             </tr>
           </thead>
           <tbody>

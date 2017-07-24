@@ -72,6 +72,15 @@ export default function (injectDeps, {FlowRouter}) {
     }
   });
 
+  FlowRouter.route('/track/:id', {
+    name: 'track',
+    action(params) {
+      mount(MainLayoutCtx, {
+        content: () => (<SearchResult trackId={params.id} />)
+      });
+    }
+  });
+
   FlowRouter.route('/not-allowed', {
     action() {
       mount(MainLayoutCtx, {

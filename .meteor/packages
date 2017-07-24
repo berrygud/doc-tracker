@@ -34,3 +34,4 @@ chrismbeckett:toastr
 twbs:bootstrap
 std:accounts-bootstrap
 dynamic-import@0.1.1
+email

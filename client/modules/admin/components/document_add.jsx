@@ -2,9 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import {Documents, Logs} from '/lib/collections';
 
-import SchoolDistrictDropdown from '../containers/school_district_dropdown'
 import DocumentTypeDropdown from '../containers/document_type_dropdown'
-import UsersDropdown from '../containers/users_dropdown'
 
 class DocumentAdd extends React.Component {
   constructor(props) {
@@ -13,7 +11,7 @@ class DocumentAdd extends React.Component {
 
   handleCreate(e) {
     e.preventDefault();
-    const {description, notes} = this.refs;
+    const {description, notes, email} = this.refs;
     let documentId = Meteor.uuid();
 
     let docTypeId = $('#documentType').val();
@@ -25,6 +23,7 @@ class DocumentAdd extends React.Component {
       trackingId,
       description: description.value,
       notes: notes.value,
+      email: email.value,
       createdBy: Meteor.userId(),
       createdDate: new Date()
     });
@@ -38,6 +37,25 @@ class DocumentAdd extends React.Component {
       userId: Meteor.userId()
     });
 
+    // todo: add email validation
+    if (email.value) {
+
+      let date = moment().format('DD MMMM YYYY')
+      let fullName = Meteor.user().profile.name;
+      let role = Meteor.user().roles[0];
+      let to = email.value
+      let subject = `DepEd Capiz Document Tracking ID: ${trackingId}`
+      let text = `
+Hello,
+
+Your ${docTypeId} document with Tracking ID : ${trackingId} has been received by ${fullName}, ${role} on ${date}.
+You can view it's activity log at http://dcman.depedcapiz.ph/track/${trackingId}.
+
+Thank you.
+`
+      Meteor.call('email.sendMail', to, subject, text);
+    }
+
     FlowRouter.redirect('/admin/doc-edit/' + documentId);
     toastr.success(`Document has been saved with TrackingID: ${trackingId}`);
   }
@@ -47,6 +65,9 @@ class DocumentAdd extends React.Component {
       <div class="col-sm-12">
         <h4>Create Document Tracker</h4>
         <form method="post" class="form-horizontal">
+
+          <DocumentTypeDropdown />
+
           <div class="form-group">
             <label class="col-sm-3 control-label">Description</label>
             <div class="col-sm-9">
@@ -61,14 +82,11 @@ class DocumentAdd extends React.Component {
                 defaultValue="" />
             </div>
           </div>
-
-          <SchoolDistrictDropdown />
-          <DocumentTypeDropdown />
-
           <div class="form-group">
-            <label class="col-sm-3 control-label">Route</label>
+            <label class="col-sm-3 control-label">Client Email</label>
             <div class="col-sm-9">
-              <UsersDropdown />
+              <input type="email" class="form-control" name="email" ref="email"
+                defaultValue="" />
             </div>
           </div>
 

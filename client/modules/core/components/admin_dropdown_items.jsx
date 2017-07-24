@@ -6,6 +6,8 @@ class AdminDropdownItems extends React.Component {
   }
 
   render() {
+    let loginButton = (Meteor.userId() ? <a href="/logout">Logout</a> : <a href="/login">Login</a>)
+
     return (
       <ul class="dropdown-menu">
         <li>
@@ -24,6 +26,9 @@ class AdminDropdownItems extends React.Component {
         </li>
         <li>
           <a href="/admin/role/add">Role Manager</a>
+        </li>
+        <li>
+          {loginButton}
         </li>
       </ul>
     );

@@ -10,4 +10,8 @@ export default function () {
   Meteor.publish('documents.all', function () {
     return Documents.find({});
   });
+
+  Meteor.publish('documents.track', function (trackingId) {
+    return Documents.find(trackingId);
+  });
 }
