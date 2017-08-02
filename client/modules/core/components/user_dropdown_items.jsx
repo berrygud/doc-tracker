@@ -11,7 +11,10 @@ class UserDropdownItems extends React.Component {
     return (
       <ul class="dropdown-menu">
         <li>
-          <a href="/">Dashboard</a>
+          <a href="/dashboard">Dashboard</a>
+        </li>
+        <li>
+          <a href="/documents">My Documents</a>
         </li>
         <li>
           {loginButton}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Logs} from '/lib/collections';
+import {Logs, Dashboards} from '/lib/collections';
 import moment from 'moment';
 
 import UsersDropdown from '../containers/users_dropdown';
@@ -13,12 +13,24 @@ class DocTransactions extends React.Component {
   handleAdd(e) {
     e.preventDefault();
 
+    let dateIn = new Date();
+
     Logs.insert({
       documentId: this.props.docId,
       trackingId: this.props.trackingId,
       beginStatus: 'Accepted',
       office: Meteor.user().username,
-      dateIn: new Date()
+      dateIn
+    });
+
+    // remove assigned document
+    // Meteor.call('dashboards.removeByDocId', this.props.docId);
+    Dashboards.insert({
+      userId: Meteor.userId(),
+      documentId: this.props.docId,
+      trackingId: this.props.trackingId,
+      type: 'Outgoing',
+      createdDate: dateIn
     });
 
     toastr.success('Transaction has been added.');
@@ -31,6 +43,7 @@ class DocTransactions extends React.Component {
     let routeUserId = $('#route-' + id + '-hidden').val();
     let endStatus = this.refs['endStatus-' + id].value;
     let transactionNotes = this.refs['transactionNotes-' + id].value;
+    let dateOut = new Date();
 
     if (!route || !endStatus) {
       alert('Route and Status is required');
@@ -42,10 +55,21 @@ class DocTransactions extends React.Component {
       routeUserId,
       endStatus,
       transactionNotes,
-      dateOut: new Date()
+      dateOut
     };
 
     Logs.update(id, {$set: data});
+
+    // remove first then add new one
+    Meteor.call('dashboards.removeUserDoc', Meteor.userId(), this.props.docId);
+    Dashboards.insert({
+      userId: routeUserId,
+      documentId: this.props.docId,
+      trackingId: this.props.trackingId,
+      type: 'Incoming',
+      createdDate: dateOut
+    });
+
     toastr.success('Transaction: Out');
   }
 
@@ -65,39 +89,39 @@ class DocTransactions extends React.Component {
   }
 
   getRoute(log) {
-    if (log.route) {
-      return log.route;
-    } else {
+    if (log.office === Meteor.user().username && !log.route) {
       return <UsersDropdown id={`route-${log._id}`} excludeUid={Meteor.userId()} />
+    } else {
+      return log.route;
     }
   }
 
   getStatus(log) {
-    if (log.endStatus) {
-      return log.endStatus;
-    } else {
+    if (log.office === Meteor.user().username && !log.route) {
       return <select class="form-control" id={`endStatus-${log._id}`} name={`endStatus-${log._id}`} ref={`endStatus-${log._id}`}>
         <option value="">N/A</option>
         <option value="Endorsed">Endorsed</option>
         <option value="Signed">Signed</option>
         <option value="Released">Released</option>
       </select>
+    } else {
+      return log.endStatus;
     }
   }
 
   getTransNotes(log) {
-    if (log.dateOut) {
-      return log.transactionNotes;
-    } else {
+    if (log.office === Meteor.user().username && !log.route) {
       return <textarea class="form-control" name={`transactionNotes-${log._id}`} ref={`transactionNotes-${log._id}`} defaultValue="" />
+    } else {
+      return log.transactionNotes;
     }
   }
 
   getOutButton(log) {
-    if (log.dateOut) {
-      return false;
-    } else {
+    if (log.office === Meteor.user().username && !log.route) {
       return <span><button class="btn btn-info" id={`outButton-${log._id}`} onClick={this.handleOut.bind(this, log._id)}>Check Out</button>&nbsp;</span>;
+    } else {
+      return false;
     }
   }
 
@@ -118,13 +142,8 @@ class DocTransactions extends React.Component {
   getCheckInRow() {
     let latestTransaction = this.props.data[this.props.data.length - 1];
 
-    // hide the check-in button if
-    // the you are the last transaction user
-    // and date-in is not empty
-    if (latestTransaction.office === Meteor.user().username &&
-      typeof latestTransaction.dateIn !== 'undefined' ) {
-        return false;
-    } else {
+    // show the check-in button if you are the assigned userId
+    if (latestTransaction.routeUserId === Meteor.userId()) {
       return (
         <tr>
           <td>{Meteor.user().username}</td>
@@ -136,7 +155,18 @@ class DocTransactions extends React.Component {
           <td><button class="btn btn-success" onClick={this.handleAdd.bind(this)}>Check In</button></td>
         </tr>
       )
+    } else {
+      return false;
     }
+  }
+
+  getActionButtons(log) {
+    return (
+      <div>
+        {this.getOutButton(log)}
+        {this.isSuperAdmin() ? <button class="btn btn-danger" onClick={this.handleDelete.bind(this, log._id)}>Delete</button> : ""}
+      </div>
+    );
   }
 
   render() {
@@ -162,22 +192,12 @@ class DocTransactions extends React.Component {
                 <tr key={i}>
                   <td>{log.office}</td>
                   <td>{moment(log.dateIn).format('llll')}</td>
-                  <td>
-                    {this.getDateOut(log)}
-                  </td>
-                  <td>
-                    {this.getRoute(log)}
-                  </td>
-                  <td>
-                    {this.getStatus(log)}
-                  </td>
-                  <td>
-                    {this.getTransNotes(log)}
-                  </td>
+                  <td>{moment(log.dateOut).format('llll')}</td>
+                  <td>{this.getRoute(log)}</td>
+                  <td>{this.getStatus(log)}</td>
+                  <td>{this.getTransNotes(log)}</td>
                   <td style={{textAlign: 'center'}}>
-                    {this.getOutButton(log)}
-                    {this.isSuperAdmin() ? <button class="btn btn-danger" onClick={this.handleDelete.bind(this, log._id)}>Delete</button> : ""}
-
+                    {this.getActionButtons(log)}
                   </td>
                 </tr>
               );

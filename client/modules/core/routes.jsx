@@ -28,7 +28,7 @@ export default function (injectDeps, {FlowRouter}) {
       mount(MainLayoutCtx, {
         content: () => {
           if (Meteor.user()) {
-            return (<Home />)
+            return (<Dashboard />)
           } else {
             FlowRouter.redirect('/login');
           }
@@ -42,6 +42,15 @@ export default function (injectDeps, {FlowRouter}) {
       Meteor.logout((err) => {
         FlowRouter.go('/')
       })
+    }
+  });
+
+  FlowRouter.route('/documents', {
+    name: 'documents',
+    action() {
+      mount(MainLayoutCtx, {
+        content: () => (<Home />)
+      });
     }
   });
 

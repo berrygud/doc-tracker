@@ -32,7 +32,7 @@ class DocumentAdd extends React.Component {
       documentId,
       trackingId,
       beginStatus: 'Accepted',
-      office: Meteor.user().username,
+      office: Meteor.user().username, // this is the username
       dateIn: new Date(),
       userId: Meteor.userId()
     });
