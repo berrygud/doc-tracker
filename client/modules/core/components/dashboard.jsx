@@ -49,25 +49,39 @@ class Dashboard extends React.Component {
   }
 
   getData() {
-    if (this.props.docs) {
-      console.log('meron')
+    if (this.props.docs.length) {
       return (
+        this.props.docs.map((doc, i) => {
 
-          this.props.docs.map((doc, i) => {
-            return (
-              <tr key={i}>
-                <td>{moment(doc.createdDate).format('llll')}</td>
-                <td><a href={`/admin/doc-edit/${doc._id}`}>{doc.trackingId}</a></td>
-                <td>{doc.description}</td>
-                <td>{doc.notes}</td>
-                <td>{this.getActionButtons(doc)}</td>
-              </tr>
-            );
-          })
+          // get time ago in hours
+          let cTstamp = moment(doc.createdDate);
+          let nowTstamp = moment(new Date());
+          let agoInHours = moment.duration(nowTstamp.diff(doc.createdDate)).asHours().toFixed();
+          let color;
+          if (agoInHours < 1) {
+            color = 'blue';
+          } else if (agoInHours > 1 && agoInHours < 2) {
+            color = 'orange';
+          } else if (agoInHours > 2) {
+            color = 'red';
+          } else {
+            color = 'red';
+          }
 
+          return (
+            <tr key={i}>
+              <td style={{color}}>
+                <strong>{moment(doc.createdDate).format('llll')}</strong>
+              </td>
+              <td><a href={`/admin/doc-edit/${doc._id}`}>{doc.trackingId}</a></td>
+              <td>{doc.description}</td>
+              <td>{doc.notes}</td>
+              <td>{this.getActionButtons(doc)}</td>
+            </tr>
+          );
+        })
       )
     } else {
-      console.log('wala')
       return (
         <tr><td colSpan="5">-- No Data --</td></tr>
       )
@@ -77,8 +91,13 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Dashboard</h2>
+      <div class="col-sm-12">
+        <a href="/admin/doc-add" class="btn btn-info">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
+          Create Document Tracker
+        </a>
+        <hr />
+        <h4>Dashboard</h4>
         <table class="table table-striped table-bordered table-hover table-condensed">
           <thead>
             <tr>

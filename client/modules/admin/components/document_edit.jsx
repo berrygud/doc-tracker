@@ -61,12 +61,6 @@ class DocumentEdit extends React.Component {
           <div class="col-sm-6">
             <button class="btn btn-primary" onClick={this.handleSubmit.bind(this)}>Save</button>
           </div>
-          <div class="col-sm-3">
-            <a href="/admin/doc-add" class="btn btn-info">
-              <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
-              Create Document Tracker
-            </a>
-          </div>
         </div>
       )
     }
@@ -75,8 +69,13 @@ class DocumentEdit extends React.Component {
     let emailAddress = (email) ? `(${email})` : '';
 
     return (
-      <div>
+      <div class="col-sm-12">
         <div class="col-sm-6">
+          <a href="/admin/doc-add" class="btn btn-info">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
+            Create Document Tracker
+          </a>
+          <hr />
           <h4>Edit Document Tracker {emailAddress}</h4>
           <form method="post" class="form-horizontal">
             <div class="form-group">
