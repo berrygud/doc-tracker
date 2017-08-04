@@ -11,7 +11,7 @@ export const composer = ({context}, onData) => {
 
     // get all assigned docs
     const options = {
-      sort: {createdDate: -1}
+      sort: {createdDate: 1}
     };
 
     // sort is important

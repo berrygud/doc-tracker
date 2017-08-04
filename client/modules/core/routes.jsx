@@ -55,11 +55,15 @@ export default function (injectDeps, {FlowRouter}) {
   });
 
   FlowRouter.route('/dashboard', {
-    name: 'home',
+    name: 'dashboard',
     action() {
-      mount(MainLayoutCtx, {
-        content: () => (<Dashboard />)
-      });
+      if (Meteor.user()) {
+        mount(MainLayoutCtx, {
+          content: () => (<Dashboard />)
+        });
+      } else {
+        FlowRouter.redirect('/login');
+      }
     }
   });
 

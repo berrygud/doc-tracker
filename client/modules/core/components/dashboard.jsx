@@ -11,6 +11,7 @@ class Dashboard extends React.Component {
     FlowRouter.redirect(`/admin/doc-edit/${doc._id}`);
   }
 
+  // todo: duplicate code from doc_transactions
   handleCheckIn(doc) {
     let dateIn = new Date();
 
@@ -23,8 +24,8 @@ class Dashboard extends React.Component {
       dateIn
     });
 
-    // remove assigned document
-    Meteor.call('dashboards.removeUserDoc', Meteor.userId(), doc._id);
+    // remove document on dashboard by documentId
+    Meteor.call('dashboards.removeByDocId', doc._id);
     Dashboards.insert({
       userId: Meteor.userId(),
       documentId: doc._id,
@@ -40,6 +41,10 @@ class Dashboard extends React.Component {
     if (doc.dashType === 'Incoming') {
       return (
         <div><button class="btn btn-success" onClick={this.handleCheckIn.bind(this, doc)}>Check In</button></div>
+      );
+    } else if (doc.dashType === 'Floating') {
+      return (
+        <div><button class="btn btn-warning" onClick={this.handleGoDetails.bind(this, doc)}>Details</button></div>
       );
     } else {
       return (
@@ -83,7 +88,9 @@ class Dashboard extends React.Component {
       )
     } else {
       return (
-        <tr><td colSpan="5">-- No Data --</td></tr>
+        <tr>
+          <td colSpan="5" style={{textAlign: 'center'}}>-- No Data --</td>
+        </tr>
       )
     }
 

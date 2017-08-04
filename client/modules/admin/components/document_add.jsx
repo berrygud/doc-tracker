@@ -72,7 +72,7 @@ Thank you.
             <label class="col-sm-3 control-label">Description</label>
             <div class="col-sm-9">
               <textarea class="form-control" name="description"
-                ref="description" defaultValue="" />
+                ref="description" defaultValue="" required={true} />
             </div>
           </div>
           <div class="form-group">

@@ -66,7 +66,6 @@ class DocumentEdit extends React.Component {
     }
 
     let {trackingId, description, notes, email} = this.props.doc;
-    let emailAddress = (email) ? `(${email})` : '';
 
     return (
       <div class="col-sm-12">
@@ -76,7 +75,7 @@ class DocumentEdit extends React.Component {
             Create Document Tracker
           </a>
           <hr />
-          <h4>Edit Document Tracker {emailAddress}</h4>
+          <h4>Edit Document Tracker</h4>
           <form method="post" class="form-horizontal">
             <div class="form-group">
               <label class="col-sm-3 control-label">Tracking ID</label>

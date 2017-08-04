@@ -17,5 +17,12 @@ export default function () {
       });
     },
 
+    'dashboards.removeByType'(documentId, type) {
+      Dashboards.remove({
+        documentId,
+        type
+      });
+    },
+
   });
 }

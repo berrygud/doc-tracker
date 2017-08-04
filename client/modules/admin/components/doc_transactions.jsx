@@ -10,7 +10,7 @@ class DocTransactions extends React.Component {
     super(props);
   }
 
-  handleAdd(e) {
+  handleCheckIn(e) {
     e.preventDefault();
 
     let dateIn = new Date();
@@ -23,20 +23,21 @@ class DocTransactions extends React.Component {
       dateIn
     });
 
-    // remove assigned document
-    // Meteor.call('dashboards.removeByDocId', this.props.docId);
+    // remove document on dashboard by documentId
+    Meteor.call('dashboards.removeByDocId', this.props.docId);
+    // document stays on his dashboard until checked-in from the other end
     Dashboards.insert({
       userId: Meteor.userId(),
       documentId: this.props.docId,
       trackingId: this.props.trackingId,
       type: 'Outgoing',
-      createdDate: dateIn
+      createdDate: dateOut
     });
 
     toastr.success('Transaction has been added.');
   }
 
-  handleOut(id) {
+  handleCheckOut(id) {
 
     // refs doesn't work on imported components, use jquery
     let route = $('#route-' + id).val();
@@ -60,15 +61,29 @@ class DocTransactions extends React.Component {
 
     Logs.update(id, {$set: data});
 
-    // remove first then add new one
-    Meteor.call('dashboards.removeUserDoc', Meteor.userId(), this.props.docId);
-    Dashboards.insert({
-      userId: routeUserId,
-      documentId: this.props.docId,
-      trackingId: this.props.trackingId,
-      type: 'Incoming',
-      createdDate: dateOut
-    });
+    // document has been released, remove from dashboard
+    if (endStatus === 'Released') {
+      Meteor.call('dashboards.removeByDocId', this.props.docId);
+    } else {
+      // remove first then add new one
+      Meteor.call('dashboards.removeUserDoc', Meteor.userId(), this.props.docId);
+      Dashboards.insert({
+        userId: routeUserId,
+        documentId: this.props.docId,
+        trackingId: this.props.trackingId,
+        type: 'Incoming',
+        createdDate: dateOut
+      });
+
+      // document stays on his dashboard until checked-in from the other end
+      Dashboards.insert({
+        userId: Meteor.userId(),
+        documentId: this.props.docId,
+        trackingId: this.props.trackingId,
+        type: 'Floating',
+        createdDate: dateOut
+      });
+    }
 
     toastr.success('Transaction: Out');
   }
@@ -119,7 +134,7 @@ class DocTransactions extends React.Component {
 
   getOutButton(log) {
     if (log.office === Meteor.user().username && !log.route) {
-      return <span><button class="btn btn-info" id={`outButton-${log._id}`} onClick={this.handleOut.bind(this, log._id)}>Check Out</button>&nbsp;</span>;
+      return <span><button class="btn btn-info" id={`outButton-${log._id}`} onClick={this.handleCheckOut.bind(this, log._id)}>Check Out</button>&nbsp;</span>;
     } else {
       return false;
     }
@@ -152,7 +167,7 @@ class DocTransactions extends React.Component {
           <td>--</td>
           <td>--</td>
           <td>--</td>
-          <td><button class="btn btn-success" onClick={this.handleAdd.bind(this)}>Check In</button></td>
+          <td><button class="btn btn-success" onClick={this.handleCheckIn.bind(this)}>Check In</button></td>
         </tr>
       )
     } else {
