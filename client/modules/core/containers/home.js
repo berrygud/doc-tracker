@@ -9,21 +9,24 @@ export const composer = ({context}, onData) => {
     let docs = Collections.Documents.find({createdBy: Meteor.userId()}).fetch();
     let logs = Collections.Logs.find({routeUserId: Meteor.userId()}).fetch();
 
-    let logsTrackingIds = logs.map((log) => {
-      return log.trackingId;
-    });
 
     let docsTrackingIds = docs.map((doc) => {
       return doc.trackingId;
     });
 
-    let trackingIds = _.union(docsTrackingIds, logsTrackingIds);
+    // requirement: change, show only owned document exclude assigned docs
+
+    // let logsTrackingIds = logs.map((log) => {
+    //   return log.trackingId;
+    // });
+
+    // let trackingIds = _.union(docsTrackingIds, logsTrackingIds);
 
     const options = {
       sort: {createdDate: -1}
     };
     let docsUnion = Collections.Documents.find({ trackingId: {
-      $in: trackingIds
+      $in: docsTrackingIds
     }}, options).fetch();
 
     onData(null, {isLoggedIn: true, docs: docsUnion});

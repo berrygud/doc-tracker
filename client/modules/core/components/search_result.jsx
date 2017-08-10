@@ -15,10 +15,11 @@ class SearchResult extends React.Component {
     } else {
       return 'N/A';
     }
-  }  
+  }
 
   render() {
     let { doc, docLogs } = this.props;
+    console.log(docLogs)
 
     let createdDate = moment(doc.createdDate).format('llll');
 
@@ -26,7 +27,7 @@ class SearchResult extends React.Component {
       <div>
         <h3>Tracking ID: {doc.trackingId}</h3>
         <p>Description: {doc.description}</p>
-        <p>Date Created: {createdDate}</p>        
+        <p>Date Created: {createdDate}</p>
         <hr />
         <h4>Transactions</h4>
         <table class="table table-striped table-bordered table-hover table-condensed">

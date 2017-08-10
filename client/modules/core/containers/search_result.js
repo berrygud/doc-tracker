@@ -12,7 +12,7 @@ export const composer = ({context, id, trackId}, onData) => {
       let doc = Documents.findOne({trackingId: trackId});
 
       const options = {
-        sort: {dateIn: 1}
+        sort: {dateIn: -1}
       };
 
       let docLogs = Logs.find({trackingId: trackId}, options).fetch();
@@ -26,7 +26,7 @@ export const composer = ({context, id, trackId}, onData) => {
       let doc = Documents.findOne(id);
 
       const options = {
-        sort: {dateIn: 1}
+        sort: {dateIn: -1}
       };
 
       let docLogs = Logs.find({documentId: id}, options).fetch();

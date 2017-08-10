@@ -11,7 +11,7 @@ export const composer = ({context, id}, onData) => {
     let doc = Documents.findOne(id);
 
     const options = {
-      sort: {dateIn: 1}
+      sort: {dateIn: -1}
     };
 
     let docLogs = Logs.find({documentId: id}, options).fetch();

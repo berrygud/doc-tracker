@@ -75,13 +75,15 @@ class Dashboard extends React.Component {
 
           return (
             <tr key={i}>
-              <td style={{color}}>
-                <strong>{moment(doc.createdDate).format('llll')}</strong>
-              </td>
               <td><a href={`/admin/doc-edit/${doc._id}`}>{doc.trackingId}</a></td>
               <td>{doc.description}</td>
               <td>{doc.notes}</td>
               <td>{this.getActionButtons(doc)}</td>
+              <td>
+                <strong>
+                  { moment.duration(nowTstamp.diff(doc.createdDate)).humanize() }
+                </strong>
+              </td>
             </tr>
           );
         })
@@ -108,11 +110,11 @@ class Dashboard extends React.Component {
         <table class="table table-striped table-bordered table-hover table-condensed">
           <thead>
             <tr>
-              <td class="col-sm-2"><strong>Date</strong></td>
               <td class="col-sm-2"><strong>Tracking ID</strong></td>
               <td class="col-sm-3"><strong>Description</strong></td>
               <td class="col-sm-3"><strong>Remarks</strong></td>
               <td class="col-sm-2"><strong>Actions</strong></td>
+              <td class="col-sm-2"><strong>Age</strong></td>
             </tr>
           </thead>
           <tbody>
