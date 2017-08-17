@@ -155,7 +155,7 @@ class DocTransactions extends React.Component {
   }
 
   getCheckInRow() {
-    let latestTransaction = this.props.data[this.props.data.length - 1];
+    let latestTransaction = this.props.data[0];
 
     // show the check-in button if you are the assigned userId
     if (latestTransaction.routeUserId === Meteor.userId()) {
@@ -202,6 +202,7 @@ class DocTransactions extends React.Component {
             </tr>
           </thead>
           <tbody>
+            {this.getCheckInRow()}
             {logs.map((log, i) => {
               return (
                 <tr key={i}>
@@ -217,7 +218,6 @@ class DocTransactions extends React.Component {
                 </tr>
               );
             })}
-            {this.getCheckInRow()}
           </tbody>
           <tfoot>
             <tr>
