@@ -61,13 +61,13 @@ class Dashboard extends React.Component {
           // get time ago in hours
           let cTstamp = moment(doc.createdDate);
           let nowTstamp = moment(new Date());
-          let agoInHours = moment.duration(nowTstamp.diff(doc.createdDate)).asHours().toFixed();
+          let agoInMinutes = moment.duration(nowTstamp.diff(doc.createdDate)).asMinutes().toFixed();
           let color;
-          if (agoInHours < 1) {
+          if (agoInMinutes < 60) {
             color = 'blue';
-          } else if (agoInHours > 1 && agoInHours < 2) {
+          } else if (agoInMinutes > 60 && agoInMinutes < 120)  {
             color = 'orange';
-          } else if (agoInHours > 2) {
+          } else if (agoInMinutes > 120) {
             color = 'red';
           } else {
             color = 'red';

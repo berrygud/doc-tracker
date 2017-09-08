@@ -16,7 +16,7 @@ class SearchBox extends Component {
         if (res.length) {
           FlowRouter.go('/admin/doc-edit/' + res[0]._id);
         } else {
-          toastr.warning("Search didn't find a match");
+          toastr.warning("Search didn't found a match");
         }
       });
     } else {
@@ -25,9 +25,9 @@ class SearchBox extends Component {
         if (res.length) {
           FlowRouter.go('/search-result/' + res[0]._id);
         } else {
-          toastr.warning("Search didn't find a match");
+          toastr.warning("Search didn't found a match");
         }
-      });   
+      });
     }
   }
 
@@ -49,7 +49,7 @@ class SearchBox extends Component {
           ref="search"
           defaultValue=""
           onKeyPress={this.handleKeyPress.bind(this)}
-          placeholder="TRACK MY DOCUMENT" />        
+          placeholder="TRACK MY DOCUMENT" />
       </div>
     )
   }

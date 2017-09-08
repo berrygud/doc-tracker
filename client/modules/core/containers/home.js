@@ -34,7 +34,8 @@ export const composer = ({context}, onData) => {
 };
 
 export const depsMapper = (context, actions) => ({
-  context: () => context
+  context: () => context,
+  filter: actions.search.filter
 });
 
 export default composeAll(

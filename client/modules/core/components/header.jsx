@@ -26,7 +26,7 @@ class Header extends React.Component {
         if (res.length) {
           FlowRouter.go('/admin/doc-edit/' + res[0]._id);
         } else {
-          toastr.warning("Search didn't find a match");
+          toastr.warning("Search didn't found a match");
         }
       });
     } else {
@@ -35,7 +35,7 @@ class Header extends React.Component {
         if (res.length) {
           FlowRouter.go('/search-result/' + res[0]._id);
         } else {
-          toastr.warning("Search didn't find a match");
+          toastr.warning("Search didn't found a match");
         }
       });
     }
