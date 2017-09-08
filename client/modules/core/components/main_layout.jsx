@@ -21,7 +21,4 @@ class Layout extends Component {
   }
 }
 
-// const Layout = ({content = () => null }) => (
-// );
-
 export default Layout;

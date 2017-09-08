@@ -4,9 +4,6 @@ import moment from 'moment';
 class SearchResult extends React.Component {
   constructor(props) {
     super(props);
-
-    // console.log(this.props.docLogs, 'doclogs')
-    // console.log(this.props.doc)
   }
 
   getDateOut(log) {

@@ -49,7 +49,13 @@ export default function (injectDeps, {FlowRouter}) {
     name: 'documents',
     action() {
       mount(MainLayoutCtx, {
-        content: () => (<Home />)
+        content: () => {
+          if (Meteor.user()) {
+            return (<Home />)
+          } else {
+            FlowRouter.redirect('/login');
+          }
+        }
       });
     }
   });

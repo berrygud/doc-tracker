@@ -5,7 +5,10 @@ import SearchBox from '../components/search_box.jsx';
 export const composer = ({context}, onData) => {
   const {Meteor, Collections} = context();
 
-  onData(null, {});
+  if (Meteor.subscribe('documents.all').ready()) {
+    onData(null, {});
+  }
+
 };
 
 export const depsMapper = (context, actions) => ({

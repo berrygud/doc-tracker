@@ -3,8 +3,8 @@ import {Meteor} from 'meteor/meteor';
 import {check} from 'meteor/check';
 
 export default function () {
-  Meteor.publish('documents.single', function (documentsId) {
-    return Documents.find(documentsId);
+  Meteor.publish('documents.single', function(id) {
+    return Documents.find({_id: id});
   });
 
   Meteor.publish('documents.all', function () {
@@ -13,5 +13,13 @@ export default function () {
 
   Meteor.publish('documents.track', function (trackingId) {
     return Documents.find(trackingId);
+  });
+
+  Meteor.publish('documents.trackIds', function (trackingIds) {
+    const options = {
+      sort: {createdDate: 1}
+    };
+
+    return Documents.find({trackingId: {$in: trackingIds}}, options)
   });
 }

@@ -80,7 +80,7 @@ class Dashboard extends React.Component {
               <td>{doc.notes}</td>
               <td>{this.getActionButtons(doc)}</td>
               <td>
-                <strong>
+                <strong style={{color}}>
                   { moment.duration(nowTstamp.diff(doc.createdDate)).humanize() }
                 </strong>
               </td>

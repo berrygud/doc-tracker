@@ -10,12 +10,14 @@ export const composer = ({context, id}, onData) => {
   if (Meteor.subscribe('documents.single', id).ready()) {
     let doc = Documents.findOne(id);
 
-    const options = {
-      sort: {dateIn: -1}
-    };
+    if (Meteor.subscribe('logs.docs', id).ready()) {
+      const options = {
+        sort: {dateIn: -1}
+      };
 
-    let docLogs = Logs.find({documentId: id}, options).fetch();
-    onData(null, {doc, docLogs});
+      let docLogs = Logs.find({documentId: id}, options).fetch();
+      onData(null, {doc, docLogs});
+    }
   }
 
 };

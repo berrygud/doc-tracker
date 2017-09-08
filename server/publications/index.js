@@ -1,3 +1,6 @@
+import document_types from './document_types';
+
+import dashboards from './dashboards';
 import documents from './documents';
 import logs from './logs';
 import users from './users';
@@ -8,4 +11,6 @@ export default function () {
   logs();
   users();
   excel();
+  dashboards();
+  document_types();
 }

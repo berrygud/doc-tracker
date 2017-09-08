@@ -9,23 +9,27 @@ export const composer = ({context}, onData) => {
 
   if (Meteor.user()) {
 
-    // get all assigned docs
-    const options = {
-      sort: {createdDate: 1}
-    };
+    if (Meteor.subscribe('dashboards').ready()) {
+      // get all assigned docs
+      const options = {
+        sort: {createdDate: -1}
+      };
 
-    // sort is important
-    let dashDocLogs = Dashboards.find({userId: Meteor.userId()}, options).fetch();
-    let trackingIds = dashDocLogs.map(ddl => ddl.trackingId);
-    var docs = Documents.find({trackingId: {$in: trackingIds}}, options).fetch();
+      let dashDocLogs = Dashboards.find({userId: Meteor.userId()}, options).fetch();
+      let trackingIds = dashDocLogs.map(ddl => ddl.trackingId);
 
-    for (let i = 0; i < docs.length; i++) {
-      if (docs[i].trackingId === dashDocLogs[i].trackingId) {
-        docs[i].dashType = dashDocLogs[i].type
+      if (Meteor.subscribe('documents.trackIds', trackingIds).ready()) {
+        let docs = Documents.find({trackingId: {$in: trackingIds}}, options).fetch();
+
+        let matchDocLogs = docs.map(function(doc) {
+          let matched = _.where(dashDocLogs, {documentId: doc._id});
+          doc.dashType = matched[0].type;
+          return doc;
+        });
+
+        onData(null, {docs: matchDocLogs});
       }
     }
-
-    onData(null, {docs});
   }
 
 };

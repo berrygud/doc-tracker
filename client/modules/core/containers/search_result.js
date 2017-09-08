@@ -29,8 +29,11 @@ export const composer = ({context, id, trackId}, onData) => {
         sort: {dateIn: -1}
       };
 
-      let docLogs = Logs.find({documentId: id}, options).fetch();
-      onData(null, {doc, docLogs});
+      if (Meteor.subscribe('logs.docs', id).ready()) {
+        let docLogs = Logs.find({documentId: id}, options).fetch();
+        onData(null, {doc, docLogs});
+      }
+
     }
   }
 
