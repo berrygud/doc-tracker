@@ -7,6 +7,7 @@ export const composer = ({context, id, trackId}, onData) => {
 
   const {Documents, Logs} = Collections;
 
+  // used by mail notification
   if (trackId) {
     if (Meteor.subscribe('documents.track', trackId).ready()) {
       let doc = Documents.findOne({trackingId: trackId});
@@ -15,9 +16,9 @@ export const composer = ({context, id, trackId}, onData) => {
         sort: {dateIn: -1}
       };
 
-      let docLogs = Logs.find({trackingId: trackId}, options).fetch();
-
-      if (doc) {
+      if (Meteor.subscribe('logs.trackId', trackId).ready()) {
+        let docLogs = Logs.find({trackingId: trackId}, options).fetch();
+        console.log(docLogs, trackId, 'doclogs')
         onData(null, {doc, docLogs});
       }
     }

@@ -24,6 +24,7 @@ export const composer = ({context}, onData) => {
         let matchDocLogs = docs.map(function(doc) {
           let matched = _.where(dashDocLogs, {documentId: doc._id});
           doc.dashType = matched[0].type;
+          doc.createdDate = matched[0].createdDate;
           return doc;
         });
 

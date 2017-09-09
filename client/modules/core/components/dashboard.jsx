@@ -15,24 +15,10 @@ class Dashboard extends React.Component {
   handleCheckIn(doc) {
     let dateIn = new Date();
 
-    Logs.insert({
-      documentId: doc._id,
-      trackingId: doc.trackingId,
-      beginStatus: 'Accepted',
-      office: Meteor.user().username,
-      type: 'Outgoing',
-      dateIn
-    });
-
+    Meteor.call('logs.insert', doc, 'Outgoing', dateIn);
     // remove document on dashboard by documentId
     Meteor.call('dashboards.removeByDocId', doc._id);
-    Dashboards.insert({
-      userId: Meteor.userId(),
-      documentId: doc._id,
-      trackingId: doc.trackingId,
-      type: 'Outgoing',
-      createdDate: dateIn
-    });
+    Meteor.call('dashboards.insert', doc, 'Outgoing', dateIn);
 
     toastr.success('Document has been checked-in.');
   }

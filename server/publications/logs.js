@@ -15,4 +15,13 @@ export default function () {
     let docLogs = Logs.find({documentId}, options);
     return docLogs;
   });
+
+  Meteor.publish('logs.trackId', (trackingId) => {
+    const options = {
+      sort: {dateIn: -1}
+    };
+
+    let docLogs = Logs.find({trackingId}, options);
+    return docLogs;
+  });
 }
