@@ -20,7 +20,6 @@ Meteor.startup(function () {
   process.env.MAIL_URL = 'smtp://dcmancapiz@gmail.com:dcmanpassword@smtp.gmail.com:587';
 });
 
-
 JsonRoutes.add("get", "/s/:id", function (req, res, next) {
   let trackingId = req.params.id;
   let doc = Documents.findOne({trackingId});
@@ -30,6 +29,7 @@ JsonRoutes.add("get", "/s/:id", function (req, res, next) {
   };
 
   let docLogs = Logs.find({trackingId}, options).fetch();
+  res.setHeader('access-control-allow-origin', '*');
 
   JsonRoutes.sendResult(res, {
     data: {doc, docLogs}
