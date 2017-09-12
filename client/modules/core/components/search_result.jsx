@@ -16,7 +16,6 @@ class SearchResult extends React.Component {
 
   render() {
     let { doc, docLogs } = this.props;
-    console.log(docLogs)
 
     let createdDate = moment(doc.createdDate).format('llll');
 

@@ -18,7 +18,6 @@ export const composer = ({context, id, trackId}, onData) => {
 
       if (Meteor.subscribe('logs.trackId', trackId).ready()) {
         let docLogs = Logs.find({trackingId: trackId}, options).fetch();
-        console.log(docLogs, trackId, 'doclogs')
         onData(null, {doc, docLogs});
       }
     }
